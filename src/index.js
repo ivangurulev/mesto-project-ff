@@ -1,16 +1,15 @@
 import { initialCards } from "./scripts/cards.js";
-import { createCard, addCard, deleteCard, like } from "./scripts/card.js";
+import { createCard, deleteCard, like } from "./scripts/card.js";
 import {
   handleKeydownEsc,
-  handleOverlayClick,
+  closePopupByClick,
   findActivePopup,
+  activePopup,
   openPopup,
   closePopup,
   isPopupOpen,
 } from "./scripts/modal.js";
-import './pages/index.css';
-export { cardTemplate, cardList };
-
+import "./pages/index.css";
 
 // @todo: Темплейт карточки
 
@@ -23,6 +22,7 @@ export { cardTemplate, cardList };
 // @todo: Вывести карточки на страницу
 
 const cardTemplate = document.querySelector("#card-template").content;
+window.cardTemplate = cardTemplate;
 const cardList = document.querySelector(".places__list");
 const addCardPopup = document.querySelector(".popup_type_new-card");
 const addButton = document.querySelector(".profile__add-button");
@@ -44,28 +44,15 @@ initialCards.forEach((item) => {
   addCard(item);
 });
 
-//закрытие попапа нажатием на крестик
-function handleCloseButton(evt) {
-  if (evt.target.classList.contains("popup__close"))
-    closePopup(findActivePopup());
+function addCard(item) {
+  const cardElement = createCard(item, { deleteCard, like, handleImageClick });
+  cardList.prepend(cardElement);
 }
-
-//проверяет открыт ли в данный момент попап, чтобы добавить слушатели событий для его закрытия
-function checkPopup() {
-  if (isPopupOpen) {
-    findActivePopup().addEventListener("click", handleCloseButton);
-    findActivePopup().addEventListener("click", handleOverlayClick);
-    document.addEventListener("keydown", handleKeydownEsc);
-  }
-}
-
-setInterval(checkPopup, 500);
 
 // обработчики событий для открытия попапов
 document.addEventListener("click", function (evt) {
   handleEditButtonClick(evt);
   handleAddButtonClick(evt);
-  handleImageClick(evt);
 });
 
 //функция открытия попапа добавления карточек
@@ -81,6 +68,7 @@ function handleImageClick(evt) {
     const popupCaption = cardImagePopup.querySelector(".popup__caption");
     popupImage.src = evt.target.src;
     popupCaption.textContent = evt.target.alt;
+    popupImage.alt = popupCaption;
     openPopup(cardImagePopup);
   }
 }
@@ -112,8 +100,7 @@ function handleAddCardSubmit(evt) {
   };
   addCard(item);
   closePopup(addCardPopup);
+  addCardForm.reset();
 }
 
 addCardForm.addEventListener("submit", handleAddCardSubmit);
-
-document.addEventListener("click", like);
