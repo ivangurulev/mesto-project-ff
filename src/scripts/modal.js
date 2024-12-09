@@ -1,4 +1,3 @@
-let isPopupOpen = false;
 let activePopup = null;
 
 function handleKeydownEsc(evt) {
@@ -16,32 +15,21 @@ function closePopupByClick(evt) {
   }
 }
 
-//возвращает открытый на данный момент попап
-function findActivePopup() {
-  if (isPopupOpen) return document.querySelector(".popup_is-opened");
-}
-
 function openPopup(popup) {
   popup.classList.add("popup_is-opened");
-  isPopupOpen = true;
-  activePopup = findActivePopup();
+  activePopup = popup;
   document.addEventListener("keydown", handleKeydownEsc);
   popup.addEventListener("click", closePopupByClick);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_is-opened");
-  isPopupOpen = false;
+  activePopup = null;
   document.removeEventListener("keydown", handleKeydownEsc);
   popup.removeEventListener("click", closePopupByClick);
 }
 
 export {
-  handleKeydownEsc,
-  closePopupByClick,
-  findActivePopup,
-  activePopup,
   openPopup,
   closePopup,
-  isPopupOpen,
 };

@@ -1,14 +1,6 @@
 import { initialCards } from "./scripts/cards.js";
 import { createCard, deleteCard, like } from "./scripts/card.js";
-import {
-  handleKeydownEsc,
-  closePopupByClick,
-  findActivePopup,
-  activePopup,
-  openPopup,
-  closePopup,
-  isPopupOpen,
-} from "./scripts/modal.js";
+import { openPopup, closePopup } from "./scripts/modal.js";
 import "./pages/index.css";
 
 // @todo: Темплейт карточки
@@ -22,7 +14,6 @@ import "./pages/index.css";
 // @todo: Вывести карточки на страницу
 
 const cardTemplate = document.querySelector("#card-template").content;
-window.cardTemplate = cardTemplate;
 const cardList = document.querySelector(".places__list");
 const addCardPopup = document.querySelector(".popup_type_new-card");
 const addButton = document.querySelector(".profile__add-button");
@@ -45,7 +36,11 @@ initialCards.forEach((item) => {
 });
 
 function addCard(item) {
-  const cardElement = createCard(item, { deleteCard, like, handleImageClick });
+  const cardElement = createCard(item, cardTemplate, {
+    deleteCard,
+    like,
+    handleImageClick,
+  });
   cardList.prepend(cardElement);
 }
 

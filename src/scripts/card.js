@@ -1,10 +1,13 @@
 export { createCard, deleteCard, like };
 
-function createCard(item, { deleteCard, like, handleImageClick }) {
+function createCard(
+  item,
+  cardTemplate,
+  { deleteCard, like, handleImageClick }
+) {
   /* Здравствуйте, не совсем вот понял, как можно 'найти' cardTemplate из index.js и обойтись без импорта,
    попробовал способ сделать её глобальной переменной через window, надеюсь правильно понял, что нужно было сделать
   */
-  const cardTemplate = window.cardTemplate;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const deleteButton = cardElement.querySelector(".card__delete-button");
   const cardImage = cardElement.querySelector(".card__image");
