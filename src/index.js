@@ -1,16 +1,7 @@
 import { initialCards } from "./scripts/cards.js";
-import { createCard, addCard, deleteCard, like } from "./scripts/card.js";
-import {
-  handleKeydownEsc,
-  handleOverlayClick,
-  findActivePopup,
-  openPopup,
-  closePopup,
-  isPopupOpen,
-} from "./scripts/modal.js";
-import './pages/index.css';
-export { cardTemplate, cardList };
-
+import { createCard, deleteCard, like } from "./scripts/card.js";
+import { openPopup, closePopup } from "./scripts/modal.js";
+import "./pages/index.css";
 
 // @todo: Темплейт карточки
 
@@ -44,28 +35,19 @@ initialCards.forEach((item) => {
   addCard(item);
 });
 
-//закрытие попапа нажатием на крестик
-function handleCloseButton(evt) {
-  if (evt.target.classList.contains("popup__close"))
-    closePopup(findActivePopup());
+function addCard(item) {
+  const cardElement = createCard(item, cardTemplate, {
+    deleteCard,
+    like,
+    handleImageClick,
+  });
+  cardList.prepend(cardElement);
 }
-
-//проверяет открыт ли в данный момент попап, чтобы добавить слушатели событий для его закрытия
-function checkPopup() {
-  if (isPopupOpen) {
-    findActivePopup().addEventListener("click", handleCloseButton);
-    findActivePopup().addEventListener("click", handleOverlayClick);
-    document.addEventListener("keydown", handleKeydownEsc);
-  }
-}
-
-setInterval(checkPopup, 500);
 
 // обработчики событий для открытия попапов
 document.addEventListener("click", function (evt) {
   handleEditButtonClick(evt);
   handleAddButtonClick(evt);
-  handleImageClick(evt);
 });
 
 //функция открытия попапа добавления карточек
@@ -81,6 +63,7 @@ function handleImageClick(evt) {
     const popupCaption = cardImagePopup.querySelector(".popup__caption");
     popupImage.src = evt.target.src;
     popupCaption.textContent = evt.target.alt;
+    popupImage.alt = popupCaption;
     openPopup(cardImagePopup);
   }
 }
@@ -112,8 +95,7 @@ function handleAddCardSubmit(evt) {
   };
   addCard(item);
   closePopup(addCardPopup);
+  addCardForm.reset();
 }
 
 addCardForm.addEventListener("submit", handleAddCardSubmit);
-
-document.addEventListener("click", like);

@@ -1,38 +1,44 @@
-let isPopupOpen = false;
+let activePopup = null;
 
 function handleKeydownEsc(evt) {
   if (evt.key === "Escape") {
-    closePopup(findActivePopup());
+    closePopup(activePopup);
   }
-  document.removeEventListener("keydown", handleKeydownEsc);
 }
 
-//закрытие попапа нажатием на оверлей
-function handleOverlayClick(evt) {
-  if (evt.target === findActivePopup()) closePopup(findActivePopup());
+function closePopupByClick(evt) {
+  if (
+    evt.target === activePopup ||
+    evt.target.classList.contains("popup__close")
+  ) {
+    closePopup(activePopup);
+  }
 }
 
 //возвращает открытый на данный момент попап
 function findActivePopup() {
-  const activePopup = document.querySelector(".popup_is-opened");
-  return activePopup;
+  if (activePopup) return document.querySelector(".popup_is-opened");
 }
 
 function openPopup(popup) {
   popup.classList.add("popup_is-opened");
-  isPopupOpen = true;
+  activePopup = popup;
+  document.addEventListener("keydown", handleKeydownEsc);
+  popup.addEventListener("click", closePopupByClick);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_is-opened");
-  isPopupOpen = false;
+  activePopup = null;
+  document.removeEventListener("keydown", handleKeydownEsc);
+  popup.removeEventListener("click", closePopupByClick);
 }
 
 export {
   handleKeydownEsc,
-  handleOverlayClick,
+  closePopupByClick,
   findActivePopup,
+  activePopup,
   openPopup,
   closePopup,
-  isPopupOpen,
 };
