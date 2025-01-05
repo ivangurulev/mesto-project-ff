@@ -2,12 +2,14 @@
   width: 21px;
   height: 18px;
   background: transparent url('../../../images/like-inactive.svg') no-repeat;
-  
+  align-self: flex-start;
+  position: relative;
   background-size: 21px 18px;
   border: none;
   cursor: pointer;
   padding: 0;
   margin: 0;
+  margin-top: -4px; /* Возможно это неверный способ для верного размещения элемента, но других идей, где не придётся создавать ещё один контейнер под кнопку лайка и счётчик, не возникло */
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
   -ms-transition: 0.3s;
@@ -15,6 +17,14 @@
   transition: 0.3s;
 }
 
+.card__like-counter {
+  font-size: 13px;
+  line-height: 15.73px;
+  color: #000;
+  position: absolute;
+  right: 27px;
+  bottom: 19px;
+}
 .card__like-button:hover {
   opacity: 0.6;
 }
