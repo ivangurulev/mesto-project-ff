@@ -8,6 +8,14 @@ const configAPI = {
     token: '5049aaed-2f06-4c50-beab-464605c8f1c5',
 }
 
+//Здравствуйте, надеюсь правильно понял, что .catch нужно было перенести непосредственно в те места, где и вызываются функции API, после всех операций с данными 
+
+const getResponseData = (res) => {
+  if (!res.ok) {
+    throw new Error(`Ошибка: ${res.status}`); 
+  }
+  return res.json();
+} 
 
 const requestProfileData = () => {
     return fetch(`${configAPI.baseUrl}/users/me`, {
@@ -17,10 +25,7 @@ const requestProfileData = () => {
       }
     })
     .then(res => {
-      return res.json();
-    })
-    .catch (err => {
-      console.log(`Ошибка: ${err}`);
+      return getResponseData(res);
     })
   };
 
@@ -32,10 +37,7 @@ const requestProfileData = () => {
     }
   })
   .then(res => {
-    if(res.ok) return res.json();
-  })
-  .catch (err => {
-    console.log(`Ошибка: ${err}`);
+    return getResponseData(res);
   })
 }
 
@@ -51,10 +53,7 @@ const postProfileData = (nameInput, aboutInput) => {
     })
   })
   .then(res => {
-    if(res.ok) return res.json();
-  })
-  .catch(err => {
-    console.log(`Ошибка при обновлении данных профиля: ${err}`);
+    return getResponseData(res);
   })
 }
 
@@ -74,6 +73,9 @@ const putLikeAPI = (cardId) => {
       authorization: configAPI.token,
     },
   })
+  .then(res => {
+    return getResponseData(res);
+})
 }
 
 const deleteLikeAPI = (cardId) => {
@@ -83,6 +85,9 @@ const deleteLikeAPI = (cardId) => {
       authorization: configAPI.token,
     },
   })
+  .then(res => {
+    return getResponseData(res);
+})
 }
 
 const patchAvatar = (imgURL) => {
@@ -94,10 +99,7 @@ const patchAvatar = (imgURL) => {
     })
   })
   .then(res => {
-    if(res.ok) return res.json();
-  })
-  .catch(err => {
-    console.log(`Ошибка при обновлении картинки профиля: ${err}`);
+    return getResponseData(res);
   })
 }
 
@@ -111,11 +113,8 @@ const postCard = (cardData) => {
     })
   })
   .then(res => {
-    if(res.ok) return res.json();
-  })
-  .catch(err => {
-    console.log(`Ошибка при публикации карточки: ${err}`);
+    return getResponseData(res);
   })
 }
 
-export { postCard, patchAvatar, deleteLikeAPI, putLikeAPI, requestCards, postProfileData, requestProfileData, deleteCardAPI, configAPI }
+export { postCard, patchAvatar, deleteLikeAPI, putLikeAPI, requestCards, postProfileData, requestProfileData, deleteCardAPI }

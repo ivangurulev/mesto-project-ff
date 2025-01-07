@@ -1,4 +1,4 @@
-export {initialCards};
+
 
 const initialCards = [
     {

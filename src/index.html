@@ -21,15 +21,21 @@
       <main class="content">
         <section class="profile page__section">
           <div
-            class="profile__image"
-            style="background-image: url(<%=require('./images/avatar.jpg')%>)" 
-          ><img src="<%=require('./images/pen.svg')%>" alt="Карандаш, являющийся иконкой редактирования профиля" class="profile__edit-icon"></div>
+            class="profile__image popup__open-button"
+            style="background-image: url(<%=require('./images/avatar.jpg')%>)"
+          >
+            <img
+              src="<%=require('./images/pen.svg')%>"
+              alt="Карандаш, являющийся иконкой редактирования профиля"
+              class="profile__edit-icon"
+            />
+          </div>
           <div class="profile__info">
             <h1 class="profile__title"></h1>
-            <button class="profile__edit-button" type="button"></button>
+            <button class="profile__edit-button popup__open-button" type="button"></button>
             <p class="profile__description"></p>
           </div>
-          <button class="profile__add-button" type="button"></button>
+          <button class="profile__add-button popup__open-button" type="button"></button>
         </section>
         <section class="places page__section">
           <ul class="places__list"></ul>
@@ -51,7 +57,8 @@
               placeholder="Имя"
               minlength="2"
               maxlength="40"
-              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы";
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+              ;
               pattern="^[A-Za-zа-яА-ЯЁё\s\-]+$"
               required
             />
@@ -64,11 +71,14 @@
               placeholder="Занятие"
               minlength="2"
               maxlength="200"
-              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы";
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+              ;
               pattern="^[A-Za-zа-яА-ЯЁё\s\-]+$"
               required
             />
-            <span class="profile__description-input-error form__input-error"></span>
+            <span
+              class="profile__description-input-error form__input-error"
+            ></span>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>
@@ -86,7 +96,8 @@
               name="place-name"
               class="popup__input popup__input_type_card-name"
               placeholder="Название"
-              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы";
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+              ;
               pattern="^[A-Za-zа-яА-ЯЁё\s\-]+$"
               maxlength="30"
               minlength="2"
@@ -109,21 +120,20 @@
         </div>
       </div>
 
-
       <div class="popup popup_type_profile_image popup_is-animated">
         <div class="popup__content">
           <button type="button" class="popup__close"></button>
           <h3 class="popup__title">Обновить аватар</h3>
           <form class="popup__form" name="newAvatar">
             <input
-            id="profile__url-input"
-            type="url"
-            name="link"
-            class="popup__input popup__input_type_url"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span class="profile__url-input-error form__input-error"></span>
+              id="profile__url-input"
+              type="url"
+              name="link"
+              class="popup__input popup__input_type_url"
+              placeholder="Ссылка на картинку"
+              required
+            />
+            <span class="profile__url-input-error form__input-error"></span>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>
@@ -146,9 +156,8 @@
         <div class="card__description">
           <h2 class="card__title"></h2>
 
-            <button type="button" class="card__like-button"></button>
-            <span maxlength="2" class="card__like-counter">0</span>
-
+          <button type="button" class="card__like-button"></button>
+          <span maxlength="2" class="card__like-counter">0</span>
         </div>
       </li>
     </template>
